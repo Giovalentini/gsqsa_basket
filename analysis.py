@@ -23,7 +23,16 @@ if __name__ == "__main__":
     tabs = pd.concat(list(df_dict_cleaned.values()))
     
     # aggregates
-    tab_agg = tabs.groupby('NOME', as_index=False).agg({'PTS':'mean','RT':'mean','AST':'mean'}).round(2)
+    tab_agg = tabs.groupby('NOME', as_index=False).agg({
+        'PTS':'mean',
+        'RT':'mean',
+        'AST':'mean',
+        'PP':'mean',
+        'PR':'mean',
+        'ST':'mean',
+        'FF':'mean',
+        'FS':'mean',
+        '+/-':'mean'}).round(2)
     
     # send to csv
     tab_agg.sort_values(by='PTS', ascending=False).to_csv(output_path+"tab_agg.csv", index=False)
