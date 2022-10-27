@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+import sys
+
+sys.path.insert(0, 'C:\\Users\\valen\\OneDrive\\Documenti\\GSQSA\\gsqsa_basket\\src')
 
 from utils import clean_stats
 
