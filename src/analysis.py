@@ -29,6 +29,8 @@ if __name__ == "__main__":
         'FT%':'mean',
         '2P%':'mean',
         '3P%':'mean',
+        'RO':'mean',
+        'RD':'mean',
         'RT':'mean',
         'AST':'mean',
         'PP':'mean',
