@@ -5,13 +5,13 @@ from utils import clean_stats
 
 if __name__ == "__main__":
 
-    data_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/tabellini/"
+    data_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/input_data/"
     output_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/output/"
 
-    # read number of sheets
-    tabellini = pd.ExcelFile(data_path+"tabellini.xlsx")
-    n_partite = len(tabellini.sheet_names)
-    print(f'number of matches: {n_partite}')
+    ## read number of sheets
+    #tabellini = pd.ExcelFile(data_path+"tabellini.xlsx")
+    #n_partite = len(tabellini.sheet_names)
+    #print(f'number of matches: {n_partite}')
     
     # read all sheets into dict
     df_dict = pd.read_excel(data_path+"tabellini.xlsx", sheet_name=None)
@@ -25,6 +25,10 @@ if __name__ == "__main__":
     # aggregates
     tab_agg = tabs.groupby('NOME', as_index=False).agg({
         'PTS':'mean',
+        'FG%':'mean',
+        'FT%':'mean',
+        '2P%':'mean',
+        '3P%':'mean',
         'RT':'mean',
         'AST':'mean',
         'PP':'mean',
