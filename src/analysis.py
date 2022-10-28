@@ -68,5 +68,6 @@ if __name__ == "__main__":
     )
     
     # send to csv
+    tabs.to_csv(output_path+"tabs.csv", index=False)
     tab_agg.sort_values(by='PTS', ascending=False).to_csv(output_path+"tab_agg.csv", index=False)
     tab_sum.sort_values(by='PTS', ascending=False).to_csv(output_path+"tab_sum.csv", index=False)
