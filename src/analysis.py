@@ -21,7 +21,7 @@ if __name__ == "__main__":
     tabs = pd.concat(list(df_dict_cleaned.values()))
     
     # aggregates
-    tab_mean = tabs.groupby('NOME', as_index=False).agg({
+    tab_mean = tabs.groupby('PLAYER', as_index=False).agg({
         'PTS':'mean',
         'RO':'mean',
         'RD':'mean',
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         'FS':'mean',
         '+/-':'mean'}).round(2)
 
-    tab_sum = tabs.groupby('NOME', as_index=False).agg({
+    tab_sum = tabs.groupby('PLAYER', as_index=False).agg({
         'PTS':'sum',
         'FTM':'sum',
         'FTA':'sum',
@@ -61,12 +61,12 @@ if __name__ == "__main__":
     tab_sum['3P%'] = round(tab_sum['3PM'] / tab_sum['3PA'] * 100, 2)
 
     #games played per player
-    games_per_player = tabs.groupby('NOME', as_index=False).size().rename(columns={'size':'G'})
+    games_per_player = tabs.groupby('PLAYER', as_index=False).size().rename(columns={'size':'G'})
 
     tab_agg = pd.merge(
         tab_mean,
-        tab_sum[['NOME','FG%','FT%','2P%','3P%']],
-        on='NOME',
+        tab_sum[['PLAYER','FG%','FT%','2P%','3P%']],
+        on='PLAYER',
         how='left'
     )
 
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     tab_agg = pd.merge(
         tab_agg,
         games_per_player,
-        on='NOME',
+        on='PLAYER',
         how='left'
     )
     
