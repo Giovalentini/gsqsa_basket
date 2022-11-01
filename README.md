@@ -13,5 +13,10 @@ The program reads single game stats from a local Excel and outputs each player's
     4. pos
     5. number
 3. order columns
+4. add team stats
+5. add mins
+6. add checks
+    1. field goals attempted >= field goals made
+    2. max 5 fouls commited per player
 
 
