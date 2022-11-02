@@ -69,7 +69,7 @@ if __name__ == "__main__":
     tab_sum['3P%'] = round(tab_sum['3PM'] / tab_sum['3PA'] * 100, 2)
 
     # games per player
-    games_per_player = tabs.groupby('PLAYER', as_index=False).size()
+    games_per_player = tabs.groupby('PLAYER', as_index=False).size().rename(columns={'size':'G'})
 
     tab_agg = pd.merge(
         pd.merge(
@@ -82,6 +82,12 @@ if __name__ == "__main__":
         on='PLAYER',
         how='left'
     )
+
+    cols_order = ['PLAYER','PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
+                  'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-']
+
+    tab_sum = tab_sum[cols_order]
+    tab_agg = tab_agg[cols_order]
     
     # send to csv
     tabs.to_csv(output_path+"tabs.csv", index=False)

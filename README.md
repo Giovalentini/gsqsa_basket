@@ -5,17 +5,16 @@
 The program reads single game stats from a local Excel and outputs each player's average and total stats, as well as gsqsa and opponent team's ones.
 
 ### TODO list
-1. add field goals made and attempted per game
+1. add number of game
 2. add player bios
     1. age
     2. height
     3. weight
     4. pos
     5. number
-3. order columns
-4. add team stats
-5. add mins
-6. add checks
+3. add team stats
+4. add mins
+5. add checks
     1. field goals attempted >= field goals made
     2. max 5 fouls commited per player
 
