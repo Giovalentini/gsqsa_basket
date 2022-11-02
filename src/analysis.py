@@ -23,6 +23,14 @@ if __name__ == "__main__":
     # aggregates
     tab_mean = tabs.groupby('PLAYER', as_index=False).agg({
         'PTS':'mean',
+        'FGM':'mean',
+        'FGA':'mean',
+        '3PM':'mean', 
+        '3PA':'mean',
+        '2PM':'mean',
+        '2PA':'mean',
+        'FTM':'mean',
+        'FTA':'mean',       
         'RO':'mean',
         'RD':'mean',
         'RT':'mean',
@@ -32,7 +40,7 @@ if __name__ == "__main__":
         'ST':'mean',
         'FF':'mean',
         'FS':'mean',
-        '+/-':'mean'}).round(2)
+        '+/-':'mean'}).round(2)#.rename(columns={'size':'G'})
 
     tab_sum = tabs.groupby('PLAYER', as_index=False).agg({
         'PTS':'sum',
@@ -60,19 +68,16 @@ if __name__ == "__main__":
     tab_sum['2P%'] = round(tab_sum['2PM'] / tab_sum['2PA'] * 100, 2)
     tab_sum['3P%'] = round(tab_sum['3PM'] / tab_sum['3PA'] * 100, 2)
 
-    #games played per player
-    games_per_player = tabs.groupby('PLAYER', as_index=False).size().rename(columns={'size':'G'})
+    # games per player
+    games_per_player = tabs.groupby('PLAYER', as_index=False).size()
 
     tab_agg = pd.merge(
-        tab_mean,
-        tab_sum[['PLAYER','FG%','FT%','2P%','3P%']],
-        on='PLAYER',
-        how='left'
-    )
-
-    # merge games per player
-    tab_agg = pd.merge(
-        tab_agg,
+        pd.merge(
+            tab_mean,
+            tab_sum[['PLAYER','FG%','FT%','2P%','3P%']],
+            on='PLAYER',
+            how='left'            
+        ),
         games_per_player,
         on='PLAYER',
         how='left'
