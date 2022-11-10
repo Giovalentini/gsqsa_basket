@@ -98,7 +98,8 @@ if __name__ == "__main__":
         how='left'
     )
 
-    cols_order = ['PLAYER','PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
+    cols_order = ['PLAYER','Age','POS','HEIGHT',
+                  'PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
                   'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-']
 
     tab_sum = tab_sum[cols_order]
