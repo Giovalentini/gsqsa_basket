@@ -1,5 +1,7 @@
 import pandas as pd
 
+from datetime import date
+
 def clean_stats(df: pd.DataFrame)->pd.DataFrame:
     '''
     Return cleaned stats
@@ -19,3 +21,8 @@ def clean_stats(df: pd.DataFrame)->pd.DataFrame:
     df['RT'] = df['RO'] + df['RD']
       
     return df
+
+def age(birthdate):
+    today = date.today()
+    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    return age

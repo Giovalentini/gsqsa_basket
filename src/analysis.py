@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, 'C:\\Users\\valen\\OneDrive\\Documenti\\GSQSA\\gsqsa_basket\\src')
 
-from utils import clean_stats
+from utils import *
 
 if __name__ == "__main__":
 
@@ -13,15 +13,30 @@ if __name__ == "__main__":
     
     # read all sheets into dict
     df_dict = pd.read_excel(data_path+"tabellini.xlsx", sheet_name=None)
+
+    # read players bio
+    players_bio = pd.read_excel(data_path+"players_bio.xlsx")
+    players_bio['Age'] = players_bio.BORN.apply(lambda x: age(x))
     
     # clean df
     df_dict_cleaned = {k:clean_stats(v) for k, v in df_dict.items()}
     
     # concat tabs
     tabs = pd.concat(list(df_dict_cleaned.values()))
-    
+
+    # merge with players bio
+    tabs = pd.merge(
+        tabs,
+        players_bio.drop(['NUMBER','BORN'],axis=1),
+        on='PLAYER',
+        how='left'
+    )
+
     # aggregates
     tab_mean = tabs.groupby('PLAYER', as_index=False).agg({
+        'Age':'max',
+        'POS':'max',
+        'HEIGHT':'max',
         'PTS':'mean',
         'FGM':'mean',
         'FGA':'mean',
