@@ -58,6 +58,9 @@ if __name__ == "__main__":
         '+/-':'mean'}).round(2)#.rename(columns={'size':'G'})
 
     tab_sum = tabs.groupby('PLAYER', as_index=False).agg({
+        'Age':'max',
+        'POS':'max',
+        'HEIGHT':'max',
         'PTS':'sum',
         'FTM':'sum',
         'FTA':'sum',
