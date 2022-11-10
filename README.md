@@ -5,7 +5,7 @@
 The program reads single game stats from a local Excel and outputs each player's average and total stats, as well as gsqsa and opponent team's ones.
 
 ### TODO list
-1. add number of game
+1. fill nas with 0 in tab sum
 2. add player bios
     1. age
     2. height
