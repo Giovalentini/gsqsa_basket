@@ -7,8 +7,10 @@ The program reads single game stats from a local Excel and outputs each player's
 ### TODO list
 1. fill nas with 0 in tab sum
 2. add team stats
+3. fix mins
 4. add checks
     1. field goals attempted >= field goals made
     2. max 5 fouls commited per player
+5. Build webapp with streamlit
 
 

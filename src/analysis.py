@@ -21,6 +21,10 @@ if __name__ == "__main__":
     
     # clean df
     df_dict_cleaned = {k:clean_stats(v) for k, v in df_dict.items()}
+
+    # add number of game
+    for i, k in enumerate(df_dict_cleaned.keys()):
+        df_dict_cleaned[k]['game'] = i+1
     
     # concat tabs
     tabs = pd.concat(list(df_dict_cleaned.values()))
@@ -112,6 +116,7 @@ if __name__ == "__main__":
         how='left'
     )
 
+    # prepare output
     cols_order = ['PLAYER','Age','POS','HEIGHT','G',
                   'PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
                   'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-','MIN']
