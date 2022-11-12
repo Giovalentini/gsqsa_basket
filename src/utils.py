@@ -8,6 +8,9 @@ def clean_stats(df: pd.DataFrame)->pd.DataFrame:
     '''
     df = df[-df.NUMERO.isin([98,99])]
 
+    # mins
+    df.MIN = df.MIN.apply(lambda x: pd.Timedelta("00:"+x))
+
     # shots
     df['PTS'] = df['FTM'] + 2*df['2PM'] + 3*df['3PM']
     df['FGM'] = df['2PM'] + df['3PM']
