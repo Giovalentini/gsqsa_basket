@@ -13,13 +13,14 @@ st.write("""
 """)
 
 player_option = st.selectbox('Choose the player', df.PLAYER.unique())
+stat_option = st.selectbox('Choose the stat', ('PTS','RT','AST'))
 
-line_chart = alt.Chart(df[df.PLAYER==player_option]).mark_line(interpolate='basis').encode(
-    alt.X([1,2,3,4,5,6], title='Year'),
-    alt.Y('PTS', title='Amount in liters')
-    #color='category:N'
+line_chart = alt.Chart(df[df.PLAYER==player_option]).mark_line().encode(
+    alt.X('game', title='Game'),
+    alt.Y(stat_option, title=stat_option)
+    #color='PLAYER:N'
 ).properties(
-    title='Points per Games'
+    title=f"{player_option}'s {stat_option} over Games"
 )
 
 st.altair_chart(line_chart)
