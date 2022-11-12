@@ -4,7 +4,8 @@ import streamlit as st
 
 # read data
 data_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/output/"
-df = pd.read_csv(data_path+'tabs.csv')
+github_data_path = "Giovalentini/gsqsa_basket/tree/main/output/"
+df = pd.read_csv(github_data_path + 'tabs.csv')
 
 # build app
 st.write("""
