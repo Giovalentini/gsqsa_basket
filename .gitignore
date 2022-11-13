@@ -3,4 +3,5 @@
 *.xls
 .xls
 *.pyc
-tabellini.ipynb
+*.ipynb
+.ipynb
