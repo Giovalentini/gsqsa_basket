@@ -4,14 +4,17 @@ import streamlit as st
 
 # read data
 #data_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/output/"
-github_data_path = "https://raw.githubusercontent.com/Giovalentini/gsqsa_basket/main/output/tabs.csv"
-df = pd.read_csv(github_data_path)
+github_data_path = "https://raw.githubusercontent.com/Giovalentini/gsqsa_basket/main/output/"
+df = pd.read_csv(github_data_path+'tabs.csv')
+tab_agg = pd.read_csv(github_data_path+"Averages per Player.csv".replace(" ", "%20"))
 
 # build app
 st.write("""
 # GSQSA Basket
 *An analysis of the GSQSA Basketball Team 2022/2023 stats*
 """)
+
+st.table(tab_agg.drop('MIN',axis=1).style.format("{:.2%}"))
 
 player_option = st.selectbox('Choose the player', df.PLAYER.unique())
 stat_option = st.selectbox('Choose the stat', ('PTS','RT','AST'))

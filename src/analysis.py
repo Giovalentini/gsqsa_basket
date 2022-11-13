@@ -116,6 +116,9 @@ if __name__ == "__main__":
         how='left'
     )
 
+    tab_mean.MIN = tab_mean.MIN.apply(lambda x: fix_mins(x))
+    tab_sum.MIN = tab_sum.MIN.apply(lambda x: fix_mins(x))    
+
     # prepare output
     cols_order = ['PLAYER','Age','POS','HEIGHT','G',
                   'PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
