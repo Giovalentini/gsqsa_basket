@@ -14,7 +14,11 @@ st.write("""
 *An analysis of the GSQSA Basketball Team 2022/2023 stats*
 """)
 
-st.table(tab_agg.drop('MIN',axis=1))
+cols_to_round = ['PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
+                'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-']
+#st.table(tab_agg.style.format(subset=cols_to_round, formatter="{:.2f}"))
+st.dataframe(tab_agg.style.format(subset=cols_to_round, formatter="{:.2f}"))
+
 
 player_option = st.selectbox('Choose the player', df.PLAYER.unique())
 stat_option = st.selectbox('Choose the stat', ('PTS','RT','AST'))
