@@ -25,6 +25,16 @@ def clean_stats(df: pd.DataFrame)->pd.DataFrame:
       
     return df
 
+def clean_team_stats(df: pd.DataFrame)->pd.DataFrame:
+    '''
+    Return team's cleaned stats
+    '''
+    df['FG%'] = df['FGM'] / df['FGA'] * 100
+    df['FT%'] = df['FTM'] / df['FTA'] * 100
+    df['2P%'] = df['2PM'] / df['2PA'] * 100
+    df['3P%'] = df['3PM'] / df['3PA'] * 100
+    return df
+
 def age(birthdate):
     today = date.today()
     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
@@ -32,3 +42,6 @@ def age(birthdate):
 
 def fix_mins(mins_played):
     return str(mins_played.seconds//60)+':'+str(mins_played.seconds%60)
+
+team_cols = ['PTS','FGM','FGA','3PM','3PA','2PM','2PA','FTM','FTA',
+             'RO','RD','RT','AST','PR','PP','ST','FF','FS']

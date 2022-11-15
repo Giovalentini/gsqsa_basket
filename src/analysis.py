@@ -22,10 +22,23 @@ if __name__ == "__main__":
     # clean df
     df_dict_cleaned = {k:clean_stats(v) for k, v in df_dict.items()}
 
-    # add number of game
+    # add game number and calculate teams stats
     for i, k in enumerate(df_dict_cleaned.keys()):
+        
+        # game number
         df_dict_cleaned[k]['game'] = i+1
-    
+
+        # team stats
+        tmp = pd.DataFrame(df_dict_cleaned[k][team_cols].sum()).T
+        tmp.rename(columns={0:i})
+        if i == 0:
+            team_stats = tmp
+        else:
+            team_stats = pd.concat([team_stats,tmp])
+        team_stats = team_stats.reset_index().drop('index',axis=1)
+
+    team_stats = clean_team_stats(team_stats)
+
     # concat tabs
     tabs = pd.concat(list(df_dict_cleaned.values()))
 
@@ -117,17 +130,22 @@ if __name__ == "__main__":
     )
 
     tab_mean.MIN = tab_mean.MIN.apply(lambda x: fix_mins(x))
-    tab_sum.MIN = tab_sum.MIN.apply(lambda x: fix_mins(x))    
+    tab_sum.MIN = tab_sum.MIN.apply(lambda x: fix_mins(x))
 
     # prepare output
     cols_order = ['PLAYER','Age','POS','HEIGHT','G',
                   'PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
                   'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-','MIN']
 
+    team_cols_order = ['PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
+                       'RO','RD','RT','AST','PR','PP','ST','FF','FS']
+
     tab_sum = tab_sum[cols_order]
     tab_mean = tab_mean[cols_order]
+    team_stats = team_stats[team_cols_order]
     
     # send to csv
     tabs.to_csv(output_path+"tabs.csv", index=False)
     tab_mean.sort_values(by='PTS', ascending=False).to_csv(output_path+"Averages_per_Player.csv", index=False)
     tab_sum.sort_values(by='PTS', ascending=False).to_csv(output_path+"Totals_per_Player.csv", index=False)
+    team_stats.to_csv(output_path+"GSQSA_team_stats.csv", index=False)
