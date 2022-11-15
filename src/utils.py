@@ -29,10 +29,10 @@ def clean_team_stats(df: pd.DataFrame)->pd.DataFrame:
     '''
     Return team's cleaned stats
     '''
-    df['FG%'] = df['FGM'] / df['FGA'] * 100
-    df['FT%'] = df['FTM'] / df['FTA'] * 100
-    df['2P%'] = df['2PM'] / df['2PA'] * 100
-    df['3P%'] = df['3PM'] / df['3PA'] * 100
+    df['FG%'] = round(df['FGM'] / df['FGA'] * 100,2)
+    df['FT%'] = round(df['FTM'] / df['FTA'] * 100,2)
+    df['2P%'] = round(df['2PM'] / df['2PA'] * 100,2)
+    df['3P%'] = round(df['3PM'] / df['3PA'] * 100,2)
     return df
 
 def age(birthdate):

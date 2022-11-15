@@ -35,7 +35,7 @@ if __name__ == "__main__":
             team_stats = tmp
         else:
             team_stats = pd.concat([team_stats,tmp])
-        team_stats = team_stats.reset_index().drop('index',axis=1)
+        team_stats = team_stats.reset_index().drop('index',axis=1).astype(int)
 
     team_stats = clean_team_stats(team_stats)
 
