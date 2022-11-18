@@ -11,7 +11,7 @@ df = pd.read_csv(github_data_path+'GSQSA_team_stats.csv')
 # build app
 st.write("""
 GSQSA Team Stats
-""")
+""",unsafe_allow_html=True)
 
 cols_to_round = ['FG%','3P%','2P%','FT%']
 

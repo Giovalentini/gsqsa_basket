@@ -10,6 +10,9 @@ The program reads single game stats from a local Excel and outputs each player's
     2. opponent team
         1. single game
         2. average
-3. Improve streamlit webapp
+2. Improve streamlit webapp
+    1. Block player column
+    2. change colors between columns
+3. add opponent team as index
 
 
