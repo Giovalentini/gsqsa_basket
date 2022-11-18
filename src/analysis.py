@@ -15,6 +15,14 @@ if __name__ == "__main__":
     # read all sheets into dict
     df_dict = pd.read_excel(data_path+"tabellini.xlsx", sheet_name=None)
 
+    # validity checks
+    for tab in df_dict.values():
+        tab = tab[~tab.NUMERO.isin([98,99])]
+        assert ((tab.FTM > tab.FTA).sum()==0),"Free Throws Made can't be greater than Free Throws Attempted"
+        assert ((tab['2PM'] > tab['2PA']).sum()==0),"2 Points Made can't be greater than 2 Points Attempted"
+        assert ((tab['3PM'] > tab['3PA']).sum()==0),"3 Points Made can't be greater than 3 Points Attempted"
+        assert ((tab.FF > 5).sum()==0), "A player can't make more than 5 fouls"
+        
     # read players bio
     players_bio = pd.read_excel(data_path+"players_bio.xlsx")
     players_bio['Age'] = players_bio.BORN.apply(lambda x: age(x))
@@ -120,7 +128,6 @@ if __name__ == "__main__":
         on='PLAYER',
         how='left'
     )
-
 
     tab_sum = pd.merge(
         tab_sum,

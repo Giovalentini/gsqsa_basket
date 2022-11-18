@@ -1,6 +1,12 @@
 import pandas as pd
-
 from datetime import date
+
+#def input_data_checks(df):
+#    """Validity checks on input data"""
+#    if df.FTM>df.FTA:
+#        raise ValueError("Free Throws Made can't be higher than Free Throws Attempted")
+#    if df['2PM']>df['2PA']:
+#        raise ValueError("Two Pointers Made can't be higher than Twp Pointers Attempted")
 
 def clean_stats(df: pd.DataFrame)->pd.DataFrame:
     '''
