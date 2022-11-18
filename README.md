@@ -6,9 +6,10 @@ The program reads single game stats from a local Excel and outputs each player's
 
 ### TODO list
 1. add team stats
-2. add checks
-    1. field goals attempted >= field goals made
-    2. max 5 fouls commited per player
+    1. team average
+    2. opponent team
+        1. single game
+        2. average
 3. Improve streamlit webapp
 
 
