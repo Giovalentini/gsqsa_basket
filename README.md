@@ -11,8 +11,7 @@ The program reads single game stats from a local Excel and outputs each player's
         1. single game
         2. average
 2. Improve streamlit webapp
-    1. Block player column
-    2. change colors between columns
+    1. aggrid --> check modulenotfound error
 3. add opponent team as index
 
 
