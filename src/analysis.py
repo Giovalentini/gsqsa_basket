@@ -57,7 +57,7 @@ if __name__ == "__main__":
         team_stats = team_stats.reset_index().drop('index',axis=1).astype(int)
 
     team_stats = clean_team_stats(team_stats)
-    team_stats.index = games_list
+    team_stats['Game'] = games_list
 
     # concat tabs
     tabs = pd.concat(list(df_dict_cleaned.values()))
@@ -156,7 +156,7 @@ if __name__ == "__main__":
                   'PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
                   'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-','MIN']
 
-    team_cols_order = ['PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
+    team_cols_order = ['Game','PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
                        'RO','RD','RT','AST','PR','PP','ST','FF','FS']
 
     tab_sum = tab_sum[cols_order]

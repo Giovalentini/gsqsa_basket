@@ -7,6 +7,7 @@ from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 # read data
 github_data_path = "https://raw.githubusercontent.com/Giovalentini/gsqsa_basket/main/output/"
 df = pd.read_csv(github_data_path+'GSQSA_team_stats.csv')
+df = df.set_index('Game')
 
 # build app
 st.write("""
