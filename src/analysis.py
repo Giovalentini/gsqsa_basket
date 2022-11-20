@@ -16,12 +16,23 @@ if __name__ == "__main__":
     df_dict = pd.read_excel(data_path+"tabellini.xlsx", sheet_name=None)
 
     # validity checks
+    games_list = []
     for tab in df_dict.values():
+
+        #get opponent team name (if 99 GSQSA played home, else played at)
+        if tab.iloc[-1].NUMERO == 99:
+            games_list.append("vs "+tab.iloc[-1].PLAYER)
+        else:
+            games_list.append("@ "+tab.iloc[-1].PLAYER)
+
+        # checks
         tab = tab[~tab.NUMERO.isin([98,99])]
         assert ((tab.FTM > tab.FTA).sum()==0),"Free Throws Made can't be greater than Free Throws Attempted"
         assert ((tab['2PM'] > tab['2PA']).sum()==0),"2 Points Made can't be greater than 2 Points Attempted"
         assert ((tab['3PM'] > tab['3PA']).sum()==0),"3 Points Made can't be greater than 3 Points Attempted"
         assert ((tab.FF > 5).sum()==0), "A player can't make more than 5 fouls"
+
+    print(games_list)
         
     # read players bio
     players_bio = pd.read_excel(data_path+"players_bio.xlsx")
@@ -46,6 +57,7 @@ if __name__ == "__main__":
         team_stats = team_stats.reset_index().drop('index',axis=1).astype(int)
 
     team_stats = clean_team_stats(team_stats)
+    team_stats.index = games_list
 
     # concat tabs
     tabs = pd.concat(list(df_dict_cleaned.values()))
