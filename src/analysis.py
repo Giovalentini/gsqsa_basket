@@ -167,4 +167,4 @@ if __name__ == "__main__":
     tabs.to_csv(output_path+"tabs.csv", index=False)
     tab_mean.sort_values(by='PTS', ascending=False).to_csv(output_path+"Averages_per_Player.csv", index=False)
     tab_sum.sort_values(by='PTS', ascending=False).to_csv(output_path+"Totals_per_Player.csv", index=False)
-    team_stats.to_csv(output_path+"GSQSA_team_stats.csv", index=False)
+    team_stats.to_csv(output_path+"GSQSA_team_stats.csv", index=True)
