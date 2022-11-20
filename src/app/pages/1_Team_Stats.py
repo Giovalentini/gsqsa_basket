@@ -14,6 +14,7 @@ GSQSA Team Stats
 """,unsafe_allow_html=True)
 
 cols_to_round = ['FG%','3P%','2P%','FT%']
+st.dataframe(df.style.format(subset=cols_to_round, formatter="{:.2f}"))
 #AgGrid(df.style.format(subset=cols_to_round, formatter="{:.2f}"))
 
 #gb = GridOptionsBuilder.from_dataframe(df)
@@ -38,4 +39,3 @@ cols_to_round = ['FG%','3P%','2P%','FT%']
 #df = grid_response['data']
 #selected = grid_response['selected_rows'] 
 #df = pd.DataFrame(selected) #Pass the selected rows to a new dataframe df
-st.dataframe(df.style.format(subset=cols_to_round, formatter="{:.2f}"))
