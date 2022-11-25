@@ -6,12 +6,11 @@ The program reads single game stats from a local Excel and outputs each player's
 
 ### TODO list
 1. add team stats
-    1. team average
+    1. team average as last row
     2. opponent team
-        1. single game
-        2. average
+    3. win or loss
+    4. impute Rozzano's points
 2. Improve streamlit webapp
     1. aggrid --> check modulenotfound error
-3. add opponent team as index
 
 

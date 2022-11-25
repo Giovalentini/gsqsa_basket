@@ -17,13 +17,8 @@ if __name__ == "__main__":
 
     # validity checks
     games_list = []
+    opp_points_list = []
     for tab in df_dict.values():
-
-        #get opponent team name (if 99 GSQSA played home, else played at)
-        if tab.iloc[-1].NUMERO == 99:
-            games_list.append("vs "+tab.iloc[-1].PLAYER)
-        else:
-            games_list.append("@ "+tab.iloc[-1].PLAYER)
 
         # checks
         tab = tab[~tab.NUMERO.isin([98,99])]
@@ -32,7 +27,18 @@ if __name__ == "__main__":
         assert ((tab['3PM'] > tab['3PA']).sum()==0),"3 Points Made can't be greater than 3 Points Attempted"
         assert ((tab.FF > 5).sum()==0), "A player can't make more than 5 fouls"
 
+        #get opponent team name (if 99 GSQSA played home, else played away)
+        if tab.iloc[-1].NUMERO == 99:
+            games_list.append("vs "+tab.iloc[-1].PLAYER)
+        else:
+            games_list.append("@ "+tab.iloc[-1].PLAYER)
+
+        # opponent points
+        opp_points = tab.iloc[-1].FTM + 2*tab.iloc[-1]['2PM'] + 3*tab.iloc[-1]['3PM']
+        opp_points_list.append(opp_points)
+
     print(games_list)
+    print(opp_points_list)
         
     # read players bio
     players_bio = pd.read_excel(data_path+"players_bio.xlsx")
