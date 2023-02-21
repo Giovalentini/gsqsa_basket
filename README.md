@@ -1,4 +1,4 @@
-# gsqsa_basket
+# GSQSA Basket
 *An analysis of the GSQSA Basketball Team 2022/2023 stats.*
 
 ## How it works
