@@ -16,16 +16,15 @@ if __name__ == "__main__":
     df_dict = pd.read_excel(data_path+"tabellini.xlsx", sheet_name=None)
 
     # validity checks
-    games_list = []
-    opp_points_list = []
+    games_list, opp_FTM_list, opp_FTA_list, opp_2PM_list, opp_2PA_list, opp_3PM_list, opp_3PA_list = ([] for i in range(7))
     for tab in df_dict.values():
 
         # checks
-        tab = tab[~tab.NUMERO.isin([98,99])]
-        assert ((tab.FTM > tab.FTA).sum()==0),"Free Throws Made can't be greater than Free Throws Attempted"
-        assert ((tab['2PM'] > tab['2PA']).sum()==0),"2 Points Made can't be greater than 2 Points Attempted"
-        assert ((tab['3PM'] > tab['3PA']).sum()==0),"3 Points Made can't be greater than 3 Points Attempted"
-        assert ((tab.FF > 5).sum()==0), "A player can't make more than 5 fouls"
+        tab_check = tab[~tab.NUMERO.isin([98,99])]
+        assert ((tab_check.FTM > tab_check.FTA).sum()==0),"Free Throws Made can't be greater than Free Throws Attempted"
+        assert ((tab_check['2PM'] > tab_check['2PA']).sum()==0),"2 Points Made can't be greater than 2 Points Attempted"
+        assert ((tab_check['3PM'] > tab_check['3PA']).sum()==0),"3 Points Made can't be greater than 3 Points Attempted"
+        assert ((tab_check.FF > 5).sum()==0), "A player can't make more than 5 fouls"
 
         #get opponent team name (if 99 GSQSA played home, else played away)
         if tab.iloc[-1].NUMERO == 99:
@@ -34,11 +33,14 @@ if __name__ == "__main__":
             games_list.append("@ "+tab.iloc[-1].PLAYER)
 
         # opponent points
-        opp_points = tab.iloc[-1].FTM + 2*tab.iloc[-1]['2PM'] + 3*tab.iloc[-1]['3PM']
-        opp_points_list.append(opp_points)
+        opp_FTM_list.append(tab.iloc[-1].FTM)
+        opp_FTA_list.append(tab.iloc[-1].FTA)
+        opp_2PM_list.append(tab.iloc[-1]['2PM'])
+        opp_2PA_list.append(tab.iloc[-1]['2PA'])
+        opp_3PM_list.append(tab.iloc[-1]['3PM'])
+        opp_3PA_list.append(tab.iloc[-1]['3PA'])
 
-    print(games_list)
-    print(opp_points_list)
+    print("Games played:", games_list)
         
     # read players bio
     players_bio = pd.read_excel(data_path+"players_bio.xlsx")
