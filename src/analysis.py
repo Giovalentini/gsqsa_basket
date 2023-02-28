@@ -103,6 +103,9 @@ if __name__ == "__main__":
         'FS':'mean',
         '+/-':'mean',
         'MIN':'mean'}).round(2)#.rename(columns={'size':'G'})
+    tab_mean.Age = tab_mean.Age.astype('Int64')
+    tab_mean.POS = tab_mean.POS.astype('Int64')
+    tab_mean.HEIGHT = tab_mean.HEIGHT.astype('Int64')
 
     tab_sum = tabs.groupby('PLAYER', as_index=False).agg({
         'Age':'max',
@@ -127,7 +130,8 @@ if __name__ == "__main__":
         'FF':'sum',
         'FS':'sum',
         '+/-':'sum',
-        'MIN':'sum'})
+        'MIN':'sum'
+    })
 
     tab_sum['FG%'] = round(tab_sum['FGM'] / tab_sum['FGA'] * 100, 2)
     tab_sum['FT%'] = round(tab_sum['FTM'] / tab_sum['FTA'] * 100, 2)
@@ -170,9 +174,18 @@ if __name__ == "__main__":
     tab_sum = tab_sum[cols_order]
     tab_mean = tab_mean[cols_order]
     team_stats = team_stats[team_cols_order]
+
+    # averages of team
+    team_averages = team_stats.drop(["Game", "FG%", "3P%", "2P%", "FT%"], axis=1).mean().round(2)
+    team_shooting = team_stats[['FGM','FGA','3PM','3PA','2PM','2PA','FTM','FTA']].sum()
+    team_shooting = clean_team_stats(team_shooting)
+    team_shooting = team_shooting[["FG%", "3P%", "2P%", "FT%"]]
+    team_averages = pd.concat([team_averages, team_shooting])
+    print(team_averages)
     
     # send to csv
-    tabs.to_csv(output_path+"tabs.csv", index=False)
+    #tabs.to_csv(output_path+"tabs.csv", index=False)
     tab_mean.sort_values(by='PTS', ascending=False).to_csv(output_path+"Averages_per_Player.csv", index=False)
     tab_sum.sort_values(by='PTS', ascending=False).to_csv(output_path+"Totals_per_Player.csv", index=False)
     team_stats.to_csv(output_path+"GSQSA_team_stats.csv", index=False)
+    team_averages.to_csv(output_path+"GSQSA_Averages.csv", index=True, header=False)
