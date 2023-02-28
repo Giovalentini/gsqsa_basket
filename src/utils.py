@@ -31,14 +31,30 @@ def clean_stats(df: pd.DataFrame)->pd.DataFrame:
       
     return df
 
-def clean_team_stats(df: pd.DataFrame)->pd.DataFrame:
+def opponent_stats(df: pd.DataFrame) -> pd.DataFrame:
+    """Calculate opponents field goals and points"""
+    df["OPP_FGM"] = df["OPP_2PM"] + df["OPP_3PM"]
+    df["OPP_FGA"] = df["OPP_2PA"] + df["OPP_3PA"]
+    df["OPP_PTS"] = df["OPP_FTM"] + 2*df["OPP_2PM"] + 3*df["OPP_3PM"]
+    return df
+
+def clean_team_stats(df: pd.DataFrame, opp=False)->pd.DataFrame:
     '''
     Return team's cleaned stats
     '''
-    df['FG%'] = round(df['FGM'] / df['FGA'] * 100,2)
-    df['FT%'] = round(df['FTM'] / df['FTA'] * 100,2)
-    df['2P%'] = round(df['2PM'] / df['2PA'] * 100,2)
-    df['3P%'] = round(df['3PM'] / df['3PA'] * 100,2)
+    if opp==False:
+        df['FG%'] = round(df['FGM'] / df['FGA'] * 100,2)
+        df['FT%'] = round(df['FTM'] / df['FTA'] * 100,2)
+        df['2P%'] = round(df['2PM'] / df['2PA'] * 100,2)
+        df['3P%'] = round(df['3PM'] / df['3PA'] * 100,2)
+
+    # opponent team's stats
+    else:
+        df['OPP_FG%'] = round(df['OPP_FGM'] / df['OPP_FGA'] * 100,2)
+        df['OPP_FT%'] = round(df['OPP_FTM'] / df['OPP_FTA'] * 100,2)
+        df['OPP_2P%'] = round(df['OPP_2PM'] / df['OPP_2PA'] * 100,2)
+        df['OPP_3P%'] = round(df['OPP_3PM'] / df['OPP_3PA'] * 100,2)
+
     return df
 
 def age(birthdate):

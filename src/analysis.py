@@ -41,6 +41,20 @@ if __name__ == "__main__":
         opp_3PA_list.append(tab.iloc[-1]['3PA'])
 
     print("Games played:", games_list)
+
+    # Opponent's stats
+    opp_stats = pd.DataFrame({
+        "OPP_FTM": opp_FTM_list,
+        "OPP_FTA": opp_FTA_list,
+        "OPP_2PM": opp_2PM_list,
+        "OPP_2PA": opp_2PA_list,
+        "OPP_3PM": opp_3PM_list,
+        "OPP_3PA": opp_3PA_list,        
+    })
+    for col in opp_stats:
+        opp_stats[col] = opp_stats[col].astype("Int64")
+    opp_stats = opponent_stats(opp_stats)
+    opp_stats = clean_team_stats(opp_stats, opp=True)
         
     # read players bio
     players_bio = pd.read_excel(data_path+"players_bio.xlsx")
@@ -174,12 +188,21 @@ if __name__ == "__main__":
     tab_sum = tab_sum[cols_order]
     tab_mean = tab_mean[cols_order]
     team_stats = team_stats[team_cols_order]
+    team_stats = pd.concat([team_stats, opp_stats], axis=1)
 
     # averages of team
-    team_averages = team_stats.drop(["Game", "FG%", "3P%", "2P%", "FT%"], axis=1).mean().round(2)
-    team_shooting = team_stats[['FGM','FGA','3PM','3PA','2PM','2PA','FTM','FTA']].sum()
-    team_shooting = clean_team_stats(team_shooting)
-    team_shooting = team_shooting[["FG%", "3P%", "2P%", "FT%"]]
+    team_averages = team_stats.drop([
+        "Game", "FG%", "3P%", "2P%", "FT%", "OPP_FG%", "OPP_3P%", "OPP_2P%", "OPP_FT%"
+    ], axis=1).mean().round(2)
+    team_shooting = team_stats[
+        ['FGM','FGA','3PM','3PA','2PM','2PA','FTM','FTA',
+         'OPP_3PM','OPP_3PA','OPP_2PM','OPP_2PA','OPP_FTM','OPP_FTA','OPP_FGM','OPP_FGA']
+    ].sum()
+    team_shooting = clean_team_stats(team_shooting, opp=False)
+    team_shooting = clean_team_stats(team_shooting, opp=True)
+    team_shooting = team_shooting[
+        ["FG%", "3P%", "2P%", "FT%", "OPP_FG%", "OPP_3P%", "OPP_2P%", "OPP_FT%"]
+    ]
     team_averages = pd.concat([team_averages, team_shooting])
     print(team_averages)
     
