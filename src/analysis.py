@@ -1,21 +1,33 @@
+import argparse
+import logging
 import numpy as np
 import pandas as pd
 import sys
 
+logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 pd.options.mode.chained_assignment = None
 sys.path.insert(0, 'C:\\Users\\valen\\OneDrive\\Documenti\\GSQSA\\gsqsa_basket\\src')
+
+parser = argparse.ArgumentParser(description='Process some data.')
+parser.add_argument('--input', dest='input_path', type=str, help='path to input file')
+parser.add_argument('--output', dest='output_path', type=str, help='path to output file')
+
+args = parser.parse_args()
 
 from utils import *
 
 if __name__ == "__main__":
 
-    data_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/input_data/"
-    output_path = "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/output/"
+    # use the input and output paths specified by the user
+    data_path = args.input_path if args.input_path else "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/input_data/"
+    output_path = args.output_path if args.output_path else "C:/Users/valen/OneDrive/Documenti/GSQSA/gsqsa_basket/output/"
     
     # read all sheets into dict
+    logging.info('Reading Excel file from %s', data_path)
     df_dict = pd.read_excel(data_path+"tabellini.xlsx", sheet_name=None)
 
     # validity checks
+    logging.info('Performing validity checks')
     games_list, opp_FTM_list, opp_FTA_list, opp_2PM_list, opp_2PA_list, opp_3PM_list, opp_3PA_list = ([] for i in range(7))
     for tab in df_dict.values():
 
@@ -207,7 +219,7 @@ if __name__ == "__main__":
     print(team_averages)
     
     # send to csv
-    #tabs.to_csv(output_path+"tabs.csv", index=False)
+    tabs.to_pickle(output_path+"tabs.pkl")
     tab_mean.sort_values(by='PTS', ascending=False).to_csv(output_path+"Averages_per_Player.csv", index=False)
     tab_sum.sort_values(by='PTS', ascending=False).to_csv(output_path+"Totals_per_Player.csv", index=False)
     team_stats.to_csv(output_path+"GSQSA_team_stats.csv", index=False)

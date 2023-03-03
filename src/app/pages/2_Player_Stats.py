@@ -4,7 +4,7 @@ import streamlit as st
 
 # read data
 github_data_path = "https://raw.githubusercontent.com/Giovalentini/gsqsa_basket/main/output/"
-df = pd.read_csv(github_data_path+'tabs.csv')
+df = pd.read_pickle(github_data_path+'tabs.pkl')
 tab_agg = pd.read_csv(github_data_path+"Averages_per_Player.csv")
 tab_agg = tab_agg.set_index('PLAYER')
 

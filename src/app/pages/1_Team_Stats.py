@@ -14,7 +14,7 @@ st.write("""
 GSQSA Team Stats
 """,unsafe_allow_html=True)
 
-cols_to_round = ['FG%','3P%','2P%','FT%']
+cols_to_round = ['FG%','3P%','2P%','FT%','OPP_FG%','OPP_3P%','OPP_2P%','OPP_FT%']
 st.dataframe(df.style.format(subset=cols_to_round, formatter="{:.2f}"))
 #AgGrid(df.style.format(subset=cols_to_round, formatter="{:.2f}"))
 
