@@ -1,12 +1,23 @@
 import altair as alt
+import os
 import pandas as pd
 import streamlit as st
+import sys
 
-dataFrameSerialization = "legacy"
+# add the parent directory to sys.path
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+#from utils import fix_mins
+
+#dataFrameSerialization = "legacy"
 
 # read data
 github_data_path = "https://raw.githubusercontent.com/Giovalentini/gsqsa_basket/main/output/"
+
+# all tabs
 df = pd.read_pickle(github_data_path+'tabs.pkl')
+#df.MIN = df.MIN.apply(lambda x: fix_mins(x))
+
+# player averages
 tab_agg = pd.read_csv(github_data_path+"Averages_per_Player.csv")
 tab_agg = tab_agg.set_index('PLAYER')
 
