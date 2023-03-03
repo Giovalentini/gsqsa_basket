@@ -2,6 +2,8 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+dataFrameSerialization = "legacy"
+
 # read data
 github_data_path = "https://raw.githubusercontent.com/Giovalentini/gsqsa_basket/main/output/"
 df = pd.read_pickle(github_data_path+'tabs.pkl')
@@ -15,7 +17,13 @@ GSQSA Player Stats
 
 cols_to_round = ['PTS','FGM','FGA','FG%','3PM','3PA','3P%','2PM','2PA','2P%','FTM','FTA','FT%',
                 'RO','RD','RT','AST','PR','PP','ST','FF','FS','+/-']
-st.dataframe(tab_agg.style.format(subset=cols_to_round, formatter="{:.2f}"))
+cols_to_int = ["Age", "POS", "HEIGHT"]
+styled_df = (
+    tab_agg.style
+    .format(subset=cols_to_round, formatter="{:.2f}")
+    .format(subset=cols_to_int, formatter="{:.0f}")
+)
+st.dataframe(styled_df)
 
 player_option = st.selectbox('Choose the player', df.PLAYER.unique())
 stat_option = st.selectbox('Choose the stat', ('PTS','RT','AST'))
