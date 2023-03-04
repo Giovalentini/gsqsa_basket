@@ -27,24 +27,34 @@ styled_df = (
 st.dataframe(styled_df)
 
 
-## PART 2 - Line chart and averages -------------------------------------
+## GRAPH 1 - Line chart -------------------------------------
 
 # Select variables to display in dropdown menu
 var_options = df.columns.tolist()
-
-# Display dropdown menu
 var_select = st.selectbox("Select variable to plot", var_options)
+line_chart_df = df.reset_index()
+
+# Calculate the cumulative average
+cumulative_average = alt.Chart(line_chart_df).transform_window(
+    rolling_mean=f"mean({var_select})",
+    frame=[None,0]
+).mark_line(color="orange").encode(
+    alt.X('Game', title='Game'),
+    alt.Y('rolling_mean:Q', title=f"{var_select} (cumulative average)", axis=alt.Axis(titleFontSize=12)),
+    color=alt.value('orange'),
+    #legend=alt.Legend(title='Average', labelFontSize=12, titleFontSize=12)
+)
 
 # Create line chart for selected variable
-#line_chart_df = df.reset_index()
-line_chart_df = df.reset_index()
 chart = alt.Chart(line_chart_df).mark_line().encode(
     x="Game",
     y=alt.Y(var_select, scale=alt.Scale(domain=(line_chart_df[var_select].min(), line_chart_df[var_select].max()))),
 ).properties(width=600, height=400)
 
 # Display line chart
-st.altair_chart(chart)
+st.altair_chart(chart + cumulative_average)
+
+## GRAPH 2 - Averages -------------------------------------
 
 # Create bar chart of mean for all variables
 mean_df = df.mean().reset_index(name="mean").rename(columns={"index": "variable"})
