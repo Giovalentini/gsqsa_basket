@@ -51,8 +51,13 @@ chart = alt.Chart(line_chart_df).mark_line().encode(
     y=alt.Y(var_select, scale=alt.Scale(domain=(line_chart_df[var_select].min(), line_chart_df[var_select].max()))),
 ).properties(width=600, height=400)
 
+circles = alt.Chart(line_chart_df).mark_circle().encode(
+    x="Game",
+    y=alt.Y(var_select, scale=alt.Scale(domain=(line_chart_df[var_select].min(), line_chart_df[var_select].max()))),
+).properties(width=600, height=400)
+
 # Display line chart
-st.altair_chart(chart + cumulative_average)
+st.altair_chart(chart + cumulative_average + circles)
 
 ## GRAPH 2 - Averages -------------------------------------
 
