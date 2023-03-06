@@ -33,13 +33,14 @@ st.dataframe(styled_df)
 var_options = df.columns.tolist()
 var_select = st.selectbox("Select variable to plot", var_options)
 line_chart_df = df.reset_index()
+chart_sort = [x for x in line_chart_df["Game"]]
 
 # Calculate the cumulative average
 cumulative_average = alt.Chart(line_chart_df).transform_window(
     rolling_mean=f"mean({var_select})",
     frame=[None,0]
 ).mark_line(color="orange").encode(
-    alt.X('Game', title='Game'),
+    alt.X('Game', title='Game', sort=chart_sort),
     alt.Y('rolling_mean:Q', title=f"{var_select} (cumulative average)", axis=alt.Axis(titleFontSize=12)),
     color=alt.value('orange'),
     #legend=alt.Legend(title='Average', labelFontSize=12, titleFontSize=12)
@@ -47,12 +48,13 @@ cumulative_average = alt.Chart(line_chart_df).transform_window(
 
 # Create line chart for selected variable
 chart = alt.Chart(line_chart_df).mark_line().encode(
-    x="Game",
+    x=alt.X("Game", title="Game", sort=chart_sort),
     y=alt.Y(var_select, scale=alt.Scale(domain=(line_chart_df[var_select].min(), line_chart_df[var_select].max()))),
 ).properties(width=600, height=400)
 
+# Circles
 circles = alt.Chart(line_chart_df).mark_circle().encode(
-    x="Game",
+    x=alt.X("Game", title="Game", sort=chart_sort),
     y=alt.Y(var_select, scale=alt.Scale(domain=(line_chart_df[var_select].min(), line_chart_df[var_select].max()))),
 ).properties(width=600, height=400)
 
