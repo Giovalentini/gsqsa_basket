@@ -218,7 +218,6 @@ if __name__ == "__main__":
         ["FG%", "3P%", "2P%", "FT%", "OPP_FG%", "OPP_3P%", "OPP_2P%", "OPP_FT%"]
     ]
     team_averages = pd.concat([team_averages, team_shooting])
-    print(team_averages)
     
     # send to csv
     tabs.to_pickle(output_path+"tabs.pkl")
