@@ -40,7 +40,7 @@ st.dataframe(styled_df)
 
 # Graph 1 -----------------
 player_option = st.selectbox('Choose the player', df.PLAYER.unique())
-stat_option = st.selectbox('Choose the stat', ('PTS','RT','AST'))
+stat_option = st.selectbox('Choose the stat', (cols_to_round))
 
 # Calculate the cumulative average
 cumulative_average = alt.Chart(df[df.PLAYER==player_option]).transform_window(
