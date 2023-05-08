@@ -5,7 +5,7 @@ backcall==0.2.0
 backports.zoneinfo==0.2.1
 blinker==1.5
 cachetools==5.2.0
-camelot-py==0.11.0
+camelot-py[base]
 certifi==2022.9.24
 charset-normalizer==2.1.1
 click==8.1.3
