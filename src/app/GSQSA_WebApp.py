@@ -1,8 +1,4 @@
 import streamlit as st
-## TO BE REMOVED: test
-import camelot
-
-#from st_aggrid import GridOptionsBuilder, AgGrid
 
 st.write("""
 # GSQSA Basket
